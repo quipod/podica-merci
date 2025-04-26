@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Merci - Podica</title>
   <link rel="icon" href="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
@@ -15,36 +16,41 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       text-align: center;
+      padding: 20px;
     }
     #logo {
       margin-bottom: 20px;
     }
+    #logo img {
+      height: 120px; /* Logo plus grand */
+    }
     h1 {
       margin: 10px 0;
-      font-size: 28px;
+      font-size: 32px;
     }
     p {
       margin: 10px 0;
-      font-size: 18px;
+      font-size: 20px;
     }
     #qr-container {
       margin-top: 20px;
     }
-    .button {
-      margin-top: 30px;
-      background-color: #007BFF;
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 5px;
-      font-size: 18px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .button:hover {
-      background-color: #0056b3;
+    @media (max-width: 600px) {
+      /* Sur mobile */
+      #logo img {
+        height: 100px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 16px;
+      }
+      #qr-container {
+        margin-top: 15px;
+      }
     }
   </style>
 
@@ -54,7 +60,7 @@
 <body>
 
   <div id="logo">
-    <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica" height="80">
+    <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
   </div>
 
   <h1>🎉 Félicitations !</h1>
