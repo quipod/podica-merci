@@ -2,38 +2,52 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Merci pour votre inscription</title>
+  <title>Merci - Podica</title>
+  <link rel="icon" href="https://lh5.googleusercontent.com/I-0qAtr9dJtNzM7n6ngeYaM3BucetYf0Lss641v9klyfI5SpvFv4ZMugXDSlS-fzmDp2OylD-dwbMWeSVxIi2vI=w16383" type="image/png">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 40px;
-      background-color: #f5f7fa;
-    }
-    #qr-container {
-      margin-top: 30px;
+      margin: 0;
+      padding: 0;
+      background-color: #010c58;
+      font-family: 'Arial', sans-serif;
+      color: white;
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-    }
-    .infos {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #2c3e50;
-    }
-    h1 {
-      color: #4B0082; /* Violet Podica */
-      margin-top: 10px;
-    }
-    .info-label {
-      font-weight: bold;
-      color: #34495e;
+      height: 100vh;
+      text-align: center;
     }
     #logo {
       margin-bottom: 20px;
     }
+    h1 {
+      margin: 10px 0;
+      font-size: 28px;
+    }
+    p {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+    #qr-container {
+      margin-top: 20px;
+    }
+    .button {
+      margin-top: 30px;
+      background-color: #007BFF;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
   </style>
 
-  <!-- QRCode.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
@@ -43,9 +57,9 @@
     <img src="https://lh5.googleusercontent.com/I-0qAtr9dJtNzM7n6ngeYaM3BucetYf0Lss641v9klyfI5SpvFv4ZMugXDSlS-fzmDp2OylD-dwbMWeSVxIi2vI=w16383" alt="Logo Podica" height="80">
   </div>
 
-  <h1>✅ Merci pour votre inscription !</h1>
+  <h1>🎉 Félicitations !</h1>
 
-  <div class="infos" id="infos"></div>
+  <p>Validez votre formulaire pour obtenir votre<br>QR code personnalisé à présenter à notre opérateur.</p>
 
   <div id="qr-container"></div>
 
@@ -56,26 +70,13 @@
     }
 
     const id = decodeURIComponent(getParam('id'));
-    const prenom = decodeURIComponent(getParam('prenom'));
-    const nom = decodeURIComponent(getParam('nom'));
-    const tel = decodeURIComponent(getParam('tel'));
-    const email = decodeURIComponent(getParam('email'));
-    const pointure = decodeURIComponent(getParam('pointure'));
-
-    document.getElementById('infos').innerHTML = `
-      <div><span class="info-label">Nom :</span> ${nom}</div>
-      <div><span class="info-label">Prénom :</span> ${prenom}</div>
-      <div><span class="info-label">Téléphone :</span> ${tel}</div>
-      <div><span class="info-label">Email :</span> ${email}</div>
-      <div><span class="info-label">Pointure :</span> ${pointure}</div>
-    `;
 
     new QRCode(document.getElementById("qr-container"), {
       text: id,
-      width: 250,
-      height: 250,
-      colorDark: "#2c3e50",
-      colorLight: "#ffffff",
+      width: 150,
+      height: 150,
+      colorDark: "#ffffff",
+      colorLight: "#010c58",
     });
   </script>
 
