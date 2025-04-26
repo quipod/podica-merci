@@ -8,28 +8,40 @@
       font-family: Arial, sans-serif;
       text-align: center;
       margin: 40px;
+      background-color: #f5f7fa; /* Fond très clair */
     }
     #qr-container {
       margin-top: 30px;
+      display: flex;
+      justify-content: center;
     }
     .infos {
       margin-top: 20px;
       font-size: 18px;
-      color: #333;
+      color: #2c3e50;
     }
     h1 {
-      color: #2c3e50;
+      color: #4B0082; /* Violet Podica */
+      margin-top: 10px;
     }
     .info-label {
       font-weight: bold;
+      color: #34495e;
+    }
+    #logo {
+      margin-bottom: 20px;
     }
   </style>
 
-  <!-- Import QRCode.js depuis un CDN fiable -->
+  <!-- QRCode.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
+
+  <div id="logo">
+    <img src="https://podica.fr/logo_podica.png" alt="Logo Podica" height="80">
+  </div>
 
   <h1>✅ Merci pour votre inscription !</h1>
 
@@ -50,7 +62,7 @@
     const email = decodeURIComponent(getParam('email'));
     const pointure = decodeURIComponent(getParam('pointure'));
 
-    // Affiche les informations pour vérification
+    // Affiche les infos
     document.getElementById('infos').innerHTML = `
       <div><span class="info-label">Nom :</span> ${nom}</div>
       <div><span class="info-label">Prénom :</span> ${prenom}</div>
@@ -59,12 +71,12 @@
       <div><span class="info-label">Pointure :</span> ${pointure}</div>
     `;
 
-    // Génère le QR code contenant l'ID
+    // Générer le QR code
     new QRCode(document.getElementById("qr-container"), {
       text: id,
       width: 250,
       height: 250,
-      colorDark: "#000000",
+      colorDark: "#2c3e50",
       colorLight: "#ffffff",
     });
   </script>
