@@ -70,72 +70,46 @@
     }
   </style>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-</head>
+ <script>
+  function getParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name) || "";
+  }
 
-<body>
+  const prenom = decodeURIComponent(getParam('prenom'));
+  const nom = decodeURIComponent(getParam('nom'));
+  const tel = decodeURIComponent(getParam('tel')).replace(/\+/g, '+').replace(/%20/g, ' '); // Gère espaces
+  const email = decodeURIComponent(getParam('email'));
+  const pointure = decodeURIComponent(getParam('pointure'));
+  const diabete = decodeURIComponent(getParam('diabete'));
+  const pratiquesportive = decodeURIComponent(getParam('pratiquesportive'));
+  const sportpratique = decodeURIComponent(getParam('sportpratique'));
+  const dureehebdosport = decodeURIComponent(getParam('dureehebdosport'));
 
-  <!-- Version Bureau -->
-  <div class="desktop-version">
-    <div id="logo-desktop">
-      <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
-    </div>
-    <h1>🎉 Félicitations !</h1>
-    <p>Maintenant, présentez ce QR Code à notre opérateur afin qu'il vous guide jusqu'à votre analyse gratuite !</p>
-    <div id="qr-container-desktop"></div>
-  </div>
+  const qrContent = 
+    `Nom: ${nom} | Prénom: ${prenom} | Téléphone: ${tel} | Email: ${email} | Pointure: ${pointure} | Diabète: ${diabete} | Pratique sportive: ${pratiquesportive} | Sport pratiqué: ${sportpratique} | Durée hebdomadaire sport: ${dureehebdosport} heures`;
 
-  <!-- Version Mobile -->
-  <div class="mobile-version">
-    <div id="logo-mobile">
-      <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
-    </div>
-    <h1>🎉 Bravo !</h1>
-    <p>Montrez ce QR Code à notre opérateur pour votre analyse gratuite 🚀</p>
-    <div id="qr-container-mobile"></div>
-  </div>
+  if (document.getElementById('qr-container-desktop')) {
+    new QRCode(document.getElementById("qr-container-desktop"), {
+      text: qrContent,
+      width: 180,
+      height: 180,
+      colorDark: "#ffffff",
+      colorLight: "#010c58",
+    });
+  }
 
-  <script>
-    function getParam(name) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(name) || "";
-    }
+  if (document.getElementById('qr-container-mobile')) {
+    new QRCode(document.getElementById("qr-container-mobile"), {
+      text: qrContent,
+      width: 160,
+      height: 160,
+      colorDark: "#ffffff",
+      colorLight: "#010c58",
+    });
+  }
+</script>
 
-    const prenom = decodeURIComponent(getParam('prenom'));
-    const nom = decodeURIComponent(getParam('nom'));
-    const tel = decodeURIComponent(getParam('tel'));
-    const email = decodeURIComponent(getParam('email'));
-    const pointure = decodeURIComponent(getParam('pointure'));
-    const diabete = decodeURIComponent(getParam('diabete'));
-    const pratiquesportive = decodeURIComponent(getParam('pratiquesportive'));
-    const sportpratique = decodeURIComponent(getParam('sportpratique'));
-    const dureehebdosport = decodeURIComponent(getParam('dureehebdosport'));
-
-    const qrContent = 
-      `Nom: ${nom} | Prénom: ${prenom} | Téléphone: ${tel} | Email: ${email} | Pointure: ${pointure} | Diabète: ${diabete} | Pratique sportive: ${pratiquesportive} | Sport pratiqué: ${sportpratique} | Durée hebdomadaire sport: ${dureehebdosport}`;
-
-    // Générer le QR code sur desktop
-    if (document.getElementById('qr-container-desktop')) {
-      new QRCode(document.getElementById("qr-container-desktop"), {
-        text: qrContent,
-        width: 180,
-        height: 180,
-        colorDark: "#ffffff",
-        colorLight: "#010c58",
-      });
-    }
-
-    // Générer le QR code sur mobile
-    if (document.getElementById('qr-container-mobile')) {
-      new QRCode(document.getElementById("qr-container-mobile"), {
-        text: qrContent,
-        width: 160,
-        height: 160,
-        colorDark: "#ffffff",
-        colorLight: "#010c58",
-      });
-    }
-  </script>
 
 </body>
 </html>
