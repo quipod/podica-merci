@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Merci pour votre inscription</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 40px;
+    }
+    #qr-container {
+      margin-top: 30px;
+    }
+    .infos {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .info-label {
+      font-weight: bold;
+    }
+  </style>
+
+  <!-- QRCode.js intégré depuis CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+
+  <h1>✅ Merci pour votre inscription !</h1>
+
+  <div class="infos" id="infos"></div>
+
+  <div id="qr-container"></div>
+
+  <script>
+    function getParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name) || "";
+    }
+
+    const id = decodeURIComponent(getParam('id'));
+    const prenom = decodeURIComponent(getParam('prenom'));
+    const nom = decodeURIComponent(getParam('nom'));
+    const tel = decodeURIComponent(getParam('tel'));
+    const email = decodeURIComponent(getParam('email'));
+    const pointure = decodeURIComponent(getParam('pointure'));
+
+    // Affiche les infos récupérées pour vérification visuelle
+    document.getElementById('infos').innerHTML = `
+      <div><span class="info-label">Nom :</span> ${nom}</div>
+      <div><span class="info-label">Prénom :</span> ${prenom}</div>
+      <div><span class="info-label">Téléphone :</span> ${tel}</div>
+      <div><span class="info-label">Email :</span> ${email}</div>
+      <div><span class="info-label">Pointure :</span> ${pointure}</div>
+    `;
+
+    // Génère le QR Code contenant l'ID unique
+    new QRCode(document.getElementById("qr-container"), {
+      text: id,
+      width: 250,
+      height: 250,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+    });
+  </script>
+
+</body>
+</html>
