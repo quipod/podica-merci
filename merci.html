@@ -12,44 +12,48 @@
       background-color: #010c58;
       font-family: 'Arial', sans-serif;
       color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
       text-align: center;
-      padding: 20px;
     }
-    #logo {
-      margin-bottom: 20px;
+    .desktop-version, .mobile-version {
+      display: none;
     }
-    #logo img {
-      height: 120px; /* Logo plus grand */
+    #logo-desktop img {
+      height: 120px;
+      margin-top: 20px;
+    }
+    #logo-mobile img {
+      height: 80px;
+      margin-top: 10px;
     }
     h1 {
-      margin: 10px 0;
+      margin: 20px 0 10px 0;
       font-size: 32px;
     }
     p {
-      margin: 10px 0;
+      margin: 10px 20px;
       font-size: 20px;
     }
-    #qr-container {
+    #qr-container-desktop, #qr-container-mobile {
       margin-top: 20px;
     }
-    @media (max-width: 600px) {
-      /* Sur mobile */
-      #logo img {
-        height: 100px;
+
+    /* Version bureau */
+    @media only screen and (min-width: 601px) {
+      .desktop-version {
+        display: block;
+      }
+    }
+
+    /* Version mobile */
+    @media only screen and (max-width: 600px) {
+      .mobile-version {
+        display: block;
       }
       h1 {
         font-size: 24px;
       }
       p {
         font-size: 16px;
-      }
-      #qr-container {
-        margin-top: 15px;
       }
     }
   </style>
@@ -59,15 +63,25 @@
 
 <body>
 
-  <div id="logo">
-    <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
+  <!-- Version Bureau -->
+  <div class="desktop-version">
+    <div id="logo-desktop">
+      <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
+    </div>
+    <h1>🎉 Félicitations !</h1>
+    <p>Maintenant, présentez ce QR Code à notre opérateur afin qu'il vous guide jusqu'à votre analyse gratuite !</p>
+    <div id="qr-container-desktop"></div>
   </div>
 
-  <h1>🎉 Félicitations !</h1>
-
-  <p>Maintenant, présentez ce QR Code à notre opérateur afin qu'il vous guide jusqu'à votre analyse gratuite !</p>
-
-  <div id="qr-container"></div>
+  <!-- Version Mobile -->
+  <div class="mobile-version">
+    <div id="logo-mobile">
+      <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
+    </div>
+    <h1>🎉 Bravo !</h1>
+    <p>Montrez ce QR Code à notre opérateur pour votre analyse gratuite 🚀</p>
+    <div id="qr-container-mobile"></div>
+  </div>
 
   <script>
     function getParam(name) {
@@ -77,13 +91,27 @@
 
     const id = decodeURIComponent(getParam('id'));
 
-    new QRCode(document.getElementById("qr-container"), {
-      text: id,
-      width: 150,
-      height: 150,
-      colorDark: "#ffffff",
-      colorLight: "#010c58",
-    });
+    // Générer le QR code sur desktop
+    if (document.getElementById('qr-container-desktop')) {
+      new QRCode(document.getElementById("qr-container-desktop"), {
+        text: id,
+        width: 150,
+        height: 150,
+        colorDark: "#ffffff",
+        colorLight: "#010c58",
+      });
+    }
+
+    // Générer le QR code sur mobile
+    if (document.getElementById('qr-container-mobile')) {
+      new QRCode(document.getElementById("qr-container-mobile"), {
+        text: id,
+        width: 130,
+        height: 130,
+        colorDark: "#ffffff",
+        colorLight: "#010c58",
+      });
+    }
   </script>
 
 </body>
