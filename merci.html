@@ -25,7 +25,7 @@
     }
   </style>
 
-  <!-- QRCode.js intégré depuis CDN -->
+  <!-- Import QRCode.js depuis un CDN fiable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
@@ -50,7 +50,7 @@
     const email = decodeURIComponent(getParam('email'));
     const pointure = decodeURIComponent(getParam('pointure'));
 
-    // Affiche les infos récupérées pour vérification visuelle
+    // Affiche les informations pour vérification
     document.getElementById('infos').innerHTML = `
       <div><span class="info-label">Nom :</span> ${nom}</div>
       <div><span class="info-label">Prénom :</span> ${prenom}</div>
@@ -59,7 +59,7 @@
       <div><span class="info-label">Pointure :</span> ${pointure}</div>
     `;
 
-    // Génère le QR Code contenant l'ID unique
+    // Génère le QR code contenant l'ID
     new QRCode(document.getElementById("qr-container"), {
       text: id,
       width: 250,
