@@ -12,48 +12,58 @@
       background-color: #010c58;
       font-family: 'Arial', sans-serif;
       color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       text-align: center;
     }
-    .desktop-version, .mobile-version {
-      display: none;
-    }
-    #logo-desktop img {
-      height: 120px;
-      margin-top: 20px;
-    }
-    #logo-mobile img {
-      height: 80px;
-      margin-top: 10px;
+    #logo-desktop img, #logo-mobile img {
+      height: 140px; /* Logo agrandi */
+      margin-bottom: 20px;
     }
     h1 {
-      margin: 20px 0 10px 0;
+      margin: 10px 0;
       font-size: 32px;
     }
     p {
-      margin: 10px 20px;
+      margin: 10px 0 20px;
       font-size: 20px;
+      padding: 0 20px;
     }
     #qr-container-desktop, #qr-container-mobile {
       margin-top: 20px;
     }
-
-    /* Version bureau */
+    .desktop-version, .mobile-version {
+      display: none;
+      width: 100%;
+    }
+    /* Desktop */
     @media only screen and (min-width: 601px) {
       .desktop-version {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
     }
-
-    /* Version mobile */
+    /* Mobile */
     @media only screen and (max-width: 600px) {
       .mobile-version {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
       h1 {
-        font-size: 24px;
+        font-size: 26px;
       }
       p {
-        font-size: 16px;
+        font-size: 18px;
+      }
+      #logo-mobile img {
+        height: 120px; /* Plus grand que précédemment */
       }
     }
   </style>
@@ -95,8 +105,8 @@
     if (document.getElementById('qr-container-desktop')) {
       new QRCode(document.getElementById("qr-container-desktop"), {
         text: id,
-        width: 150,
-        height: 150,
+        width: 180,
+        height: 180,
         colorDark: "#ffffff",
         colorLight: "#010c58",
       });
@@ -106,8 +116,8 @@
     if (document.getElementById('qr-container-mobile')) {
       new QRCode(document.getElementById("qr-container-mobile"), {
         text: id,
-        width: 130,
-        height: 130,
+        width: 160,
+        height: 160,
         colorDark: "#ffffff",
         colorLight: "#010c58",
       });
