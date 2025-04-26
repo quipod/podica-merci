@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Merci - Podica</title>
-  <link rel="icon" href="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" type="image/png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" type="image/png">
   <style>
     body {
       margin: 0;
@@ -20,45 +20,23 @@
       min-height: 100vh;
       padding: 20px;
     }
-    .desktop-version, .mobile-version {
-      display: none;
-      width: 100%;
-    }
-    #logo-desktop img, #logo-mobile img {
+    #logo img {
       height: 140px;
       margin-bottom: 20px;
     }
     h1 {
-      margin: 10px 0;
       font-size: 32px;
+      margin-bottom: 10px;
     }
     p {
-      margin: 10px 20px 20px;
       font-size: 20px;
+      margin-bottom: 20px;
     }
-    #qr-container-desktop, #qr-container-mobile {
+    #qr-container {
       margin-top: 20px;
     }
-
-    /* Version bureau */
-    @media only screen and (min-width: 601px) {
-      .desktop-version {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-
-    /* Version mobile */
-    @media only screen and (max-width: 600px) {
-      .mobile-version {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-      #logo-mobile img {
+    @media (max-width: 600px) {
+      #logo img {
         height: 120px;
       }
       h1 {
@@ -70,30 +48,20 @@
     }
   </style>
 
+  <!-- Librairie QR Code intégrée proprement -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
 
-  <!-- Version Bureau -->
-  <div class="desktop-version">
-    <div id="logo-desktop">
-      <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
-    </div>
-    <h1>🎉 Félicitations !</h1>
-    <p>Maintenant, présentez ce QR Code à notre opérateur afin qu'il vous guide jusqu'à votre analyse gratuite !</p>
-    <div id="qr-container-desktop"></div>
+  <div id="logo">
+    <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
   </div>
 
-  <!-- Version Mobile -->
-  <div class="mobile-version">
-    <div id="logo-mobile">
-      <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
-    </div>
-    <h1>🎉 Bravo !</h1>
-    <p>Montrez ce QR Code à notre opérateur pour votre analyse gratuite 🚀</p>
-    <div id="qr-container-mobile"></div>
-  </div>
+  <h1>🎉 Merci pour votre inscription !</h1>
+  <p>Présentez ce QR Code à notre opérateur pour votre analyse gratuite !</p>
+
+  <div id="qr-container"></div>
 
   <script>
     function getParam(name) {
@@ -103,7 +71,7 @@
 
     const prenom = decodeURIComponent(getParam('prenom'));
     const nom = decodeURIComponent(getParam('nom'));
-    const tel = decodeURIComponent(getParam('tel')).replace(/%20/g, ' '); // Gérer les espaces
+    const tel = decodeURIComponent(getParam('tel')).replace(/%20/g, ' ');
     const email = decodeURIComponent(getParam('email'));
     const pointure = decodeURIComponent(getParam('pointure'));
     const diabete = decodeURIComponent(getParam('diabete'));
@@ -111,30 +79,19 @@
     const sportpratique = decodeURIComponent(getParam('sportpratique'));
     const dureehebdosport = decodeURIComponent(getParam('dureehebdosport'));
 
-    // Construction du contenu QR
     const qrContent = 
       `Nom: ${nom} | Prénom: ${prenom} | Téléphone: ${tel} | Email: ${email} | Pointure: ${pointure} | Diabète: ${diabete} | Pratique sportive: ${pratiquesportive} | Sport pratiqué: ${sportpratique} | Durée hebdomadaire sport: ${dureehebdosport} heures`;
 
-    // QR Desktop
-    if (document.getElementById('qr-container-desktop')) {
-      new QRCode(document.getElementById("qr-container-desktop"), {
+    if (prenom && nom && tel && email && pointure) {
+      new QRCode(document.getElementById("qr-container"), {
         text: qrContent,
-        width: 180,
-        height: 180,
+        width: 200,
+        height: 200,
         colorDark: "#ffffff",
         colorLight: "#010c58",
       });
-    }
-
-    // QR Mobile
-    if (document.getElementById('qr-container-mobile')) {
-      new QRCode(document.getElementById("qr-container-mobile"), {
-        text: qrContent,
-        width: 160,
-        height: 160,
-        colorDark: "#ffffff",
-        colorLight: "#010c58",
-      });
+    } else {
+      document.getElementById("qr-container").innerHTML = "<p style='color: red;'>Données manquantes, merci de vérifier votre formulaire.</p>";
     }
   </script>
 
