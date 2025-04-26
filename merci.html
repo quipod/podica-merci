@@ -8,7 +8,7 @@
       font-family: Arial, sans-serif;
       text-align: center;
       margin: 40px;
-      background-color: #f5f7fa; /* Fond très clair */
+      background-color: #f5f7fa;
     }
     #qr-container {
       margin-top: 30px;
@@ -40,7 +40,7 @@
 <body>
 
   <div id="logo">
-    <img src="https://podica.fr/logo_podica.png" alt="Logo Podica" height="80">
+    <img src="https://lh5.googleusercontent.com/I-0qAtr9dJtNzM7n6ngeYaM3BucetYf0Lss641v9klyfI5SpvFv4ZMugXDSlS-fzmDp2OylD-dwbMWeSVxIi2vI=w16383" alt="Logo Podica" height="80">
   </div>
 
   <h1>✅ Merci pour votre inscription !</h1>
@@ -62,7 +62,6 @@
     const email = decodeURIComponent(getParam('email'));
     const pointure = decodeURIComponent(getParam('pointure'));
 
-    // Affiche les infos
     document.getElementById('infos').innerHTML = `
       <div><span class="info-label">Nom :</span> ${nom}</div>
       <div><span class="info-label">Prénom :</span> ${prenom}</div>
@@ -71,7 +70,6 @@
       <div><span class="info-label">Pointure :</span> ${pointure}</div>
     `;
 
-    // Générer le QR code
     new QRCode(document.getElementById("qr-container"), {
       text: id,
       width: 250,
