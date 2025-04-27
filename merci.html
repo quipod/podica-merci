@@ -42,13 +42,46 @@
       font-weight: bold;
       color: green;
     }
+    #logo img {
+      height: 120px;
+      margin-bottom: 20px;
+    }
+    .desktop-only {
+      display: none;
+    }
+    .mobile-only {
+      display: none;
+    }
+    @media (min-width: 601px) {
+      .desktop-only {
+        display: block;
+      }
+    }
+    @media (max-width: 600px) {
+      .mobile-only {
+        display: block;
+      }
+      #logo img {
+        height: 100px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <h1>🎉 Merci pour votre inscription !</h1>
-  <p>Présentez ce QR Code à notre opérateur pour votre analyse gratuite :</p>
+  <div id="logo">
+    <img src="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" alt="Logo Podica">
+  </div>
+
+  <div class="desktop-only">
+    <h1>🎉 Félicitations !</h1>
+  </div>
+  <div class="mobile-only">
+    <h1>🎉 Bravo !</h1>
+  </div>
+
+  <p>Il ne vous reste plus qu'à présenter ce QR Code à notre opérateur conseil afin d'obtenir votre analyse Podica gratuite.</p>
 
   <div id="qr-container"></div>
 
