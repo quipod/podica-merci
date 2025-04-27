@@ -18,12 +18,29 @@
     }
     #debug {
       margin-top: 30px;
-      background-color: #fff;
-      color: #000;
+      background-color: #5dade2; /* Bleu clair */
+      color: black;
       padding: 20px;
-      text-align: left;
-      font-size: 14px;
       border-radius: 8px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    #debug strong {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 15px;
+    }
+    #params {
+      text-align: left;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    #status {
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
     }
   </style>
 </head>
@@ -36,7 +53,7 @@
   <div id="qr-container"></div>
 
   <div id="debug">
-    <strong>🔍 Diagnostic :</strong><br>
+    <strong>Vos données à la 🔍 :</strong>
     <div id="params"></div>
     <div id="status"></div>
   </div>
@@ -66,8 +83,8 @@
       Email: ${email}<br>
       Pointure: ${pointure}<br>
       Diabète: ${diabete}<br>
-      Sport pratiqué: ${sportpratique}<br>
-      Durée hebdo sport: ${dureehebdosport}<br>
+      Sport principal pratiqué: ${sportpratique}<br>
+      Durée hebdo sport: ${dureehebdosport} h/semaine<br>
       Zones sensibles: ${zonesensouffrance}<br>
       Autres ressentis: ${autresressenti}<br>
       Première analyse Podica: ${premiereanalysepodica}<br>
@@ -81,7 +98,7 @@
       const img = document.createElement('img');
       img.src = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent(qrContent) + "&size=200x200&color=ffffff&bgcolor=010c58";
       document.getElementById("qr-container").appendChild(img);
-      document.getElementById("status").innerHTML = "✅ QR Code généré avec succès.";
+      document.getElementById("status").innerHTML = "QR Code généré avec succès! ✅";
     } else {
       document.getElementById("status").innerHTML = "❌ Erreur : données manquantes, QR Code non généré.";
     }
