@@ -5,7 +5,7 @@
   <title>Félicitations !</title>
   <style>
     body {
-      background-color: #e0f0ff;
+      background-color: #d6eaff; /* Bleu très doux */
       font-family: Arial, sans-serif;
       text-align: center;
       margin: 0;
@@ -14,11 +14,12 @@
     h1 {
       font-size: 2em;
       color: #004080;
+      margin-bottom: 10px;
     }
     p {
       font-size: 1.2em;
       color: #003366;
-      margin: 20px;
+      margin: 10px 20px;
     }
     #qr-container {
       position: relative;
@@ -40,11 +41,22 @@
       border-radius: 15px;
       padding: 5px;
     }
+    #infos {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px;
+      display: inline-block;
+      text-align: left;
+      color: #333;
+      max-width: 400px;
+    }
     @media (max-width: 600px) {
       h1 { font-size: 1.5em; }
       p { font-size: 1em; }
       #qrcode { width: 200px; height: 200px; }
       #logo { width: 50px; height: 50px; }
+      #infos { font-size: 0.9em; padding: 15px; }
     }
   </style>
 </head>
@@ -55,10 +67,13 @@
 
 <div id="qr-container">
   <div id="qrcode"></div>
-  <img id="logo" src="data:image/webp;base64,UklGRoJDAABXRUJQ...(ton long base64 ici)..." alt="Logo Podica">
+  <img id="logo" src="https://podica.odoo.com/web/image/1900-a0980bf6/podica_logo-vertical.webp" alt="Logo Podica">
 </div>
 
-<div id="message"></div>
+<div id="infos">
+  <strong>Vos données à la 🔍 :</strong>
+  <div id="message"></div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
@@ -66,11 +81,18 @@
     const params = new URLSearchParams(window.location.search);
 
     let contenu = '';
+    let affichage = '';
+
     params.forEach((value, key) => {
-      contenu += `${key}: ${decodeURIComponent(value)} \n`;
+      const cleanKey = decodeURIComponent(key).replace(/_/g, ' ');
+      const cleanValue = decodeURIComponent(value);
+      contenu += `${cleanKey}: ${cleanValue}\n`;
+      affichage += `<p><strong>${cleanKey}</strong> : ${cleanValue}</p>`;
     });
 
-    const qrcode = new QRCode(document.getElementById("qrcode"), {
+    document.getElementById('message').innerHTML = affichage;
+
+    new QRCode(document.getElementById("qrcode"), {
       text: contenu,
       width: 250,
       height: 250,
