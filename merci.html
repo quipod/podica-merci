@@ -2,144 +2,83 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Merci - Podica</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" type="image/png">
+  <title>Félicitations !</title>
   <style>
     body {
-      background-color: #010c58;
+      background-color: #e0f0ff;
       font-family: Arial, sans-serif;
-      color: white;
       text-align: center;
-      padding: 30px;
+      margin: 0;
+      padding: 20px;
     }
-    #qr-wrapper {
+    h1 {
+      font-size: 2em;
+      color: #004080;
+    }
+    p {
+      font-size: 1.2em;
+      color: #003366;
+      margin: 20px;
+    }
+    #qr-container {
       position: relative;
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 30px;
     }
-    #qr-container img {
+    #qrcode {
       width: 250px;
       height: 250px;
     }
-    #logo-overlay {
+    #logo {
       position: absolute;
       top: 50%;
       left: 50%;
+      width: 70px;
+      height: 70px;
       transform: translate(-50%, -50%);
-      width: 60px;
-      height: 60px;
-      border-radius: 10px;
-      background-color: white;
+      background: white;
+      border-radius: 15px;
       padding: 5px;
     }
-    #logo-overlay img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    #debug {
-      margin-top: 30px;
-      background-color: #5dade2;
-      color: black;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
-    #debug strong {
-      font-size: 20px;
-      display: block;
-      margin-bottom: 15px;
-    }
-    #params {
-      text-align: left;
-      font-size: 16px;
-      margin-bottom: 15px;
-    }
-    #status {
-      font-size: 18px;
-      font-weight: bold;
-      color: green;
-    }
-    .desktop-only { display: none; }
-    .mobile-only { display: none; }
-    @media (min-width: 601px) {
-      .desktop-only { display: block; }
-    }
     @media (max-width: 600px) {
-      .mobile-only { display: block; }
+      h1 { font-size: 1.5em; }
+      p { font-size: 1em; }
+      #qrcode { width: 200px; height: 200px; }
+      #logo { width: 50px; height: 50px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="desktop-only">
-    <h1>🎉 Félicitations !</h1>
-  </div>
-  <div class="mobile-only">
-    <h1>🎉 Bravo !</h1>
-  </div>
+<h1>Félicitations !</h1>
+<p>Il ne vous reste plus qu'à présenter ce QR Code à notre opérateur conseil afin d'obtenir votre analyse Podica gratuite.</p>
 
-  <p>Il ne vous reste plus qu'à présenter ce QR Code à notre opérateur conseil afin d'obtenir votre analyse Podica gratuite.</p>
+<div id="qr-container">
+  <div id="qrcode"></div>
+  <img id="logo" src="data:image/webp;base64,UklGRoJDAABXRUJQ...(ton long base64 ici)..." alt="Logo Podica">
+</div>
 
-  <div id="qr-wrapper">
-    <div id="qr-container"></div>
-    <div id="logo-overlay">
-      <img src="https://quipod.github.io/podica-merci/logo-podica.png" alt="Logo Podica">
-    </div>
-  </div>
+<div id="message"></div>
 
-  <div id="debug">
-    <strong>Vos données à la 🔍 :</strong>
-    <div id="params"></div>
-    <div id="status"></div>
-  </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-function getParam(name) {
-  const params = new URLSearchParams(window.location.search);
-  return params.get(name) || "";
-}
-const prenom = decodeURIComponent(getParam('prenom'));
-const nom = decodeURIComponent(getParam('nom'));
-const tel = decodeURIComponent(getParam('tel')).replace(/%20/g, ' ');
-const email = decodeURIComponent(getParam('email'));
-const pointure = decodeURIComponent(getParam('pointure'));
-const diabete = decodeURIComponent(getParam('diabete'));
-const sportpratique = decodeURIComponent(getParam('sportpratique'));
-const dureehebdosport = decodeURIComponent(getParam('dureehebdosport'));
-zonesensouffrance = decodeURIComponent(getParam('zonesensouffrance'));
-autresressenti = decodeURIComponent(getParam('autresressenti'));
-premiereanalysepodica = decodeURIComponent(getParam('premiereanalysepodica'));
+  document.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
 
-const allParams = `
-Prénom: ${prenom}<br>
-Nom: ${nom}<br>
-Téléphone: ${tel}<br>
-Email: ${email}<br>
-Pointure: ${pointure}<br>
-Diabète: ${diabete}<br>
-Sport principal pratiqué: ${sportpratique}<br>
-Durée hebdo sport: ${dureehebdosport} h/semaine<br>
-Zones sensibles: ${zonesensouffrance}<br>
-Autres ressentis: ${autresressenti}<br>
-Première analyse Podica: ${premiereanalysepodica}<br>
-`;
-document.getElementById("params").innerHTML = allParams;
+    let contenu = '';
+    params.forEach((value, key) => {
+      contenu += `${key}: ${decodeURIComponent(value)} \n`;
+    });
 
-const qrContent = `Nom: ${nom} | Prénom: ${prenom} | Téléphone: ${tel} | Email: ${email} | Pointure: ${pointure} | Diabète: ${diabete} | Sport pratiqué: ${sportpratique} | Durée sport: ${dureehebdosport}h/semaine | Zones sensibles: ${zonesensouffrance} | Autres ressentis: ${autresressenti} | Première analyse Podica: ${premiereanalysepodica}`;
-
-if (prenom && nom && tel && email && pointure) {
-  const img = document.createElement('img');
-  img.src = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent(qrContent) + "&size=250x250&color=ffffff&bgcolor=010c58";
-  document.getElementById("qr-container").appendChild(img);
-  document.getElementById("status").innerHTML = "QR Code généré avec succès! 👌";
-} else {
-  document.getElementById("status").innerHTML = "❌ Erreur : données manquantes, QR Code non généré.";
-}
+    const qrcode = new QRCode(document.getElementById("qrcode"), {
+      text: contenu,
+      width: 250,
+      height: 250,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  });
 </script>
 
 </body>
