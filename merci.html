@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Merci - Podica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" type="image/png">
   <style>
     body {
       background-color: #010c58;
@@ -30,7 +31,7 @@
 <body>
 
   <h1>🎉 Merci pour votre inscription !</h1>
-  <p>Voici votre QR Code :</p>
+  <p>Présentez ce QR Code à notre opérateur pour votre analyse gratuite :</p>
 
   <div id="qr-container"></div>
 
@@ -52,9 +53,11 @@
     const email = decodeURIComponent(getParam('email'));
     const pointure = decodeURIComponent(getParam('pointure'));
     const diabete = decodeURIComponent(getParam('diabete'));
-    const pratiquesportive = decodeURIComponent(getParam('pratiquesportive'));
     const sportpratique = decodeURIComponent(getParam('sportpratique'));
     const dureehebdosport = decodeURIComponent(getParam('dureehebdosport'));
+    const zonesensouffrance = decodeURIComponent(getParam('zonesensouffrance'));
+    const autresressenti = decodeURIComponent(getParam('autresressenti'));
+    const premiereanalysepodica = decodeURIComponent(getParam('premiereanalysepodica'));
 
     const allParams = `
       Prénom: ${prenom}<br>
@@ -63,20 +66,22 @@
       Email: ${email}<br>
       Pointure: ${pointure}<br>
       Diabète: ${diabete}<br>
-      Pratique sportive: ${pratiquesportive}<br>
       Sport pratiqué: ${sportpratique}<br>
-      Durée hebdomadaire sport: ${dureehebdosport}<br>
+      Durée hebdo sport: ${dureehebdosport}<br>
+      Zones sensibles: ${zonesensouffrance}<br>
+      Autres ressentis: ${autresressenti}<br>
+      Première analyse Podica: ${premiereanalysepodica}<br>
     `;
     document.getElementById("params").innerHTML = allParams;
 
     const qrContent = 
-      `Nom: ${nom} | Prénom: ${prenom} | Téléphone: ${tel} | Email: ${email} | Pointure: ${pointure} | Diabète: ${diabete} | Pratique sportive: ${pratiquesportive} | Sport pratiqué: ${sportpratique} | Durée hebdomadaire sport: ${dureehebdosport} heures`;
+      `Nom: ${nom} | Prénom: ${prenom} | Téléphone: ${tel} | Email: ${email} | Pointure: ${pointure} | Diabète: ${diabete} | Sport pratiqué: ${sportpratique} | Durée sport: ${dureehebdosport}h/semaine | Zones sensibles: ${zonesensouffrance} | Autres ressentis: ${autresressenti} | Première analyse Podica: ${premiereanalysepodica}`;
 
     if (prenom && nom && tel && email && pointure) {
-      document.getElementById("status").innerHTML = "✅ Données valides. Génération du QR Code...";
       const img = document.createElement('img');
       img.src = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent(qrContent) + "&size=200x200&color=ffffff&bgcolor=010c58";
       document.getElementById("qr-container").appendChild(img);
+      document.getElementById("status").innerHTML = "✅ QR Code généré avec succès.";
     } else {
       document.getElementById("status").innerHTML = "❌ Erreur : données manquantes, QR Code non généré.";
     }
