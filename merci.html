@@ -1,93 +1,61 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Merci - Podica</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" type="image/png">
-  <style>
-    body {
-      background-color: #010c58;
-      font-family: Arial, sans-serif;
-      color: white;
-      text-align: center;
-      padding: 30px;
-    }
-    #qr-wrapper {
-      background-color: white;
-      border-radius: 20px;
-      padding: 20px;
-      display: inline-block;
-      position: relative;
-      margin-top: 20px;
-    }
-    #qr-code img {
-      width: 200px;
-      height: 200px;
-      display: block;
-    }
-    #logo-overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 50px;
-      height: 50px;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 5px;
-      border-radius: 10px;
-    }
-    #logo-overlay img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    #debug {
-      margin-top: 30px;
-      background-color: #5dade2; /* Bleu clair */
-      color: black;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
-    #debug strong {
-      font-size: 20px;
-      display: block;
-      margin-bottom: 15px;
-    }
-    #params {
-      text-align: left;
-      font-size: 16px;
-      margin-bottom: 15px;
-    }
-    #status {
-      font-size: 18px;
-      font-weight: bold;
-      color: green;
-    }
+<meta charset="UTF-8">
+<title>Merci - Podica</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://images.typeform.com/images/DgiqAc8r5Kd6/image/default" type="image/png">
+<style>
+  body {
+    background-color: #010c58;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+    padding: 30px;
+  }
+  #qr-container {
+    margin-top: 20px;
+  }
+  #debug {
+    margin-top: 30px;
+    background-color: #5dade2; /* Bleu clair */
+    color: black;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  #debug strong {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 15px;
+  }
+  #params {
+    text-align: left;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  #status {
+    font-size: 18px;
+    font-weight: bold;
+    color: green;
+  }
+  .desktop-only {
+    display: none;
+  }
+  .mobile-only {
+    display: none;
+  }
+  @media (min-width: 601px) {
     .desktop-only {
-      display: none;
+      display: block;
     }
+  }
+  @media (max-width: 600px) {
     .mobile-only {
-      display: none;
+      display: block;
     }
-    @media (min-width: 601px) {
-      .desktop-only {
-        display: block;
-      }
-    }
-    @media (max-width: 600px) {
-      .mobile-only {
-        display: block;
-      }
-    }
-  </style>
-</head>
-
-<body>
+  }
+</style>
 
 <div class="desktop-only">
   <h1>🎉 Félicitations !</h1>
@@ -98,12 +66,7 @@
 
 <p>Il ne vous reste plus qu'à présenter ce QR Code à notre opérateur conseil afin d'obtenir votre analyse Podica gratuite.</p>
 
-<div id="qr-wrapper">
-  <div id="qr-code"></div>
-  <div id="logo-overlay">
-    <img src="https://podica.odoo.com/web/image/1900-a0980bf6/podica_logo-vertical.webp" alt="Logo Podica">
-  </div>
-</div>
+<div id="qr-container"></div>
 
 <div id="debug">
   <strong>Vos données à la 🔍 :</strong>
@@ -117,6 +80,7 @@
     return params.get(name) || "";
   }
 
+  const genre = decodeURIComponent(getParam('genre'));
   const prenom = decodeURIComponent(getParam('prenom'));
   const nom = decodeURIComponent(getParam('nom'));
   const tel = decodeURIComponent(getParam('tel')).replace(/%20/g, ' ');
@@ -130,6 +94,7 @@
   const premiereanalysepodica = decodeURIComponent(getParam('premiereanalysepodica'));
 
   const allParams = `
+    Genre: ${genre}<br>
     Prénom: ${prenom}<br>
     Nom: ${nom}<br>
     Téléphone: ${tel}<br>
@@ -145,18 +110,14 @@
   document.getElementById("params").innerHTML = allParams;
 
   const qrContent = 
-    `Nom: ${nom} | Prénom: ${prenom} | Téléphone: ${tel} | Email: ${email} | Pointure: ${pointure} | Diabète: ${diabete} | Sport pratiqué: ${sportpratique} | Durée sport: ${dureehebdosport}h/semaine | Zones sensibles: ${zonesensouffrance} | Autres ressentis: ${autresressenti} | Première analyse Podica: ${premiereanalysepodica}`;
+    `Nom: ${nom} | Prénom: ${prenom} | Genre: ${genre} | Téléphone: ${tel} | Email: ${email} | Pointure: ${pointure} | Diabète: ${diabete} | Sport pratiqué: ${sportpratique} | Durée sport: ${dureehebdosport}h/semaine | Zones sensibles: ${zonesensouffrance} | Autres ressentis: ${autresressenti} | Première analyse Podica: ${premiereanalysepodica}`;
 
   if (prenom && nom && tel && email && pointure) {
     const img = document.createElement('img');
     img.src = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent(qrContent) + "&size=200x200&color=ffffff&bgcolor=010c58";
-    img.className = "qr-code";
-    document.getElementById("qr-code").appendChild(img);
+    document.getElementById("qr-container").appendChild(img);
     document.getElementById("status").innerHTML = "QR Code généré avec succès! ✅";
   } else {
     document.getElementById("status").innerHTML = "❌ Erreur : données manquantes, QR Code non généré.";
   }
 </script>
-
-</body>
-</html>
